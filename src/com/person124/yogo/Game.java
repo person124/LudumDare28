@@ -9,6 +9,7 @@ import java.awt.image.DataBufferInt;
 
 import javax.swing.JFrame;
 
+import com.person124.yogo.entity.mob.MobCrate;
 import com.person124.yogo.entity.mob.MobPlayer;
 import com.person124.yogo.graphics.Render;
 import com.person124.yogo.input.Keyboard;
@@ -31,7 +32,7 @@ public class Game extends Canvas implements Runnable {
 	
 	private Render render;
 	private Keyboard key;
-	private Level level;
+	public static Level level;
 	public static MobPlayer thePlayer;
 	
 	public Game(int s) {
@@ -41,10 +42,13 @@ public class Game extends Canvas implements Runnable {
 		
 		render = new Render(WIDTH, HEIGHT);
 		key = new Keyboard();
-		level = new Level("/levels/test.png", new TileCoordinate(1, 23));
+		level = new Level("/levels/test.png", new TileCoordinate(2, 23));
 		
 		thePlayer = new MobPlayer(key);
 		thePlayer.init(level);
+		
+		MobCrate crate = new MobCrate(32, 23 * 32);
+		crate.init(level);
 		
 		addKeyListener(key);
 		addFocusListener(key);
@@ -70,7 +74,8 @@ public class Game extends Canvas implements Runnable {
 			fps++;
 			
 			if (System.currentTimeMillis() - timer > 1000) {
-				frame.setTitle(NAME + " | fps: " + fps + ", ups: " + ups);
+				if(key.debug) frame.setTitle(NAME + " | fps: " + fps + ", ups: " + ups);
+				else frame.setTitle(NAME);
 				timer += 1000;
 				fps = 0;
 				ups = 0;
@@ -124,7 +129,7 @@ public class Game extends Canvas implements Runnable {
 	}
 	
 	public static void start(String[] args) {
-		Game g = new Game(3);
+		Game g = new Game(Integer.parseInt(args[0]));
 		
 		g.frame.setPreferredSize(g.SIZE);
 		g.frame.setTitle(NAME);

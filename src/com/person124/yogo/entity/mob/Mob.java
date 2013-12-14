@@ -6,6 +6,7 @@ import com.person124.yogo.graphics.Sprite;
 public class Mob extends Entity {
 	
 	private boolean isEffectedByGravity = true;
+	public int dir = 0;
 	private int gravTime = 0, maxGravTime = 1;
 	private boolean dead = false;
 	
@@ -30,6 +31,9 @@ public class Mob extends Entity {
 		}
 		
 		if (collision(xa, ya)) return;
+		
+		if (xa > 0) dir = 1;
+		if (xa < 0) dir = 0;
 		
 		x += xa;
 		y += ya;

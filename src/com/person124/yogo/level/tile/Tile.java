@@ -15,6 +15,11 @@ public class Tile {
 	
 	public static Tile bg_stoneWall = new Tile(Sprite.bg_stone_wall, false, 0xff9d9d9d);
 	
+	public static Tile pad_off = new TilePadOff(0xffff6700);
+	public static Tile pad_on = new TilePadOn();
+	
+	public static Tile lava = new TileLava(0xffff0000);
+	
 	public Tile(Sprite sprite, boolean solid, int id) {
 		this.sprite = sprite;
 		SOLID = solid;
@@ -26,15 +31,19 @@ public class Tile {
 		
 		if (col == bg_stoneWall.ID) return bg_stoneWall;
 		
+		if (col == pad_off.ID) return pad_off;
+		
+		if (col == lava.ID) return new TileLava(0xffff00);
+		
 		return nullTile;
 	}
 	
-	public void update() {
+	public void update(int loc) {
 		
 	}
 	
 	public void render(Render render, int x, int y) {
 		render.renderSprite(sprite, x, y);
 	}
-
+	
 }

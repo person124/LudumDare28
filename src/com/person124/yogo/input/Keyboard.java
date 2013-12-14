@@ -7,8 +7,8 @@ import java.awt.event.KeyListener;
 
 public class Keyboard implements KeyListener, FocusListener {
 	
-	private boolean[] keys = new boolean[25565];
-	public boolean up, down, left, right, jump;
+	public boolean[] keys = new boolean[25565];
+	public boolean up, down, left, right, jump, pickup, debug = false;
 	
 	@Override
 	public void focusGained(FocusEvent e) {
@@ -25,6 +25,10 @@ public class Keyboard implements KeyListener, FocusListener {
 	@Override
 	public void keyPressed(KeyEvent e) {
 		keys[e.getKeyCode()] = true;
+		if (keys[KeyEvent.VK_F5]) {
+			keys[KeyEvent.VK_5] = false;
+			debug = !debug;
+		}
 	}
 	
 	@Override
@@ -43,6 +47,7 @@ public class Keyboard implements KeyListener, FocusListener {
 		left = keys[KeyEvent.VK_A];
 		right = keys[KeyEvent.VK_D];
 		jump = keys[KeyEvent.VK_SPACE];
+		pickup = keys[KeyEvent.VK_E];
 	}
 	
 }

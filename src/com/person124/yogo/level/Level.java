@@ -52,12 +52,12 @@ public class Level {
 	}
 	
 	public void update() {
-		for (Tile t : tiles) {
-			t.update();
+		for (int i = 0; i < tiles.length; i++) {
+			tiles[i].update(i);
 		}
-		for (Entity e : entities) {
-			e.update();
-			if (e.isRemoved()) entities.remove(e);
+		for (int i = 0; i < entities.size(); i++) {
+			entities.get(i).update();
+			if (entities.get(i).isRemoved()) entities.remove(i);
 		}
 	}
 	

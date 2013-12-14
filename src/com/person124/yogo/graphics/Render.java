@@ -3,7 +3,7 @@ package com.person124.yogo.graphics;
 import com.person124.yogo.Game;
 
 public class Render {
-
+	
 	public int[] pixels;
 	private int xOff = 0, yOff = 0;
 	
@@ -33,9 +33,10 @@ public class Render {
 				if (xa < -sprite.SIZE || xa >= Game.WIDTH || ya < 0 || ya >= Game.HEIGHT) break;
 				if (xa < 0) xa = 0;
 				
-				pixels[xa + ya * Game.WIDTH] = sprite.pixels[x + y * sprite.SIZE];
+				int col = sprite.pixels[x + y * sprite.SIZE];
+				if (col != 0xffff00ff) pixels[xa + ya * Game.WIDTH] = col;
 			}
 		}
 	}
-
+	
 }

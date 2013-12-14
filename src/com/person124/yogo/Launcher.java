@@ -1,6 +1,5 @@
 package com.person124.yogo;
 
-import java.awt.Panel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -18,7 +17,7 @@ import javax.swing.border.EmptyBorder;
 
 public class Launcher extends JFrame {
 	private static final long serialVersionUID = 1L;
-
+	
 	private final String NAME = Game.NAME;
 	
 	private JPanel panel;
@@ -138,13 +137,17 @@ public class Launcher extends JFrame {
 		return (Game.WIDTH * scale) + "x" + (scale * Game.HEIGHT);
 	}
 	
-	public static void main(String[] main) {
-		SwingUtilities.invokeLater(new Runnable() {
-			public void run() {
-				Launcher launcher = new Launcher();
-				launcher.setVisible(true);
-			}
-		});
+	public static void main(String[] args) {
+		if (args[0].equalsIgnoreCase("skip")) {
+			Game.start(new String[] { "3" });
+		} else {
+			SwingUtilities.invokeLater(new Runnable() {
+				public void run() {
+					Launcher launcher = new Launcher();
+					launcher.setVisible(true);
+				}
+			});
+		}
 	}
 	
 }

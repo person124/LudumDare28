@@ -35,11 +35,21 @@ public class Entity {
 	}
 	
 	public void remove() {
-		removed = false;
+		removed = true;
 	}
 	
 	public boolean isRemoved() {
 		return removed;
 	}
-
+	
+	public static int getDistance(Entity e1, Entity e2) {
+		int temp = 0;
+		
+		int xDist = Math.abs(e1.x - e2.x);
+		int yDist = Math.abs(e1.y - e2.y);
+		temp = (int) Math.sqrt((xDist * xDist) + (yDist * yDist));
+		
+		return temp;
+	}
+	
 }
