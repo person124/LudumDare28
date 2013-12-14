@@ -20,6 +20,9 @@ public class Tile {
 	
 	public static Tile lava = new TileLava(0xffff0000);
 	
+	public static Tile door_closed = new TileDoorClosed(0xffababab);
+	public static Tile door_open = new TileDoorOpen();
+	
 	public Tile(Sprite sprite, boolean solid, int id) {
 		this.sprite = sprite;
 		SOLID = solid;
@@ -34,6 +37,8 @@ public class Tile {
 		if (col == pad_off.ID) return pad_off;
 		
 		if (col == lava.ID) return new TileLava(0xffff00);
+		
+		if (col == door_closed.ID) return door_closed;
 		
 		return nullTile;
 	}

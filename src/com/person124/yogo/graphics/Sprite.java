@@ -29,6 +29,10 @@ public class Sprite {
 	public static Sprite pad_off = new Sprite(32, "/textures/pad_off.png");
 	public static Sprite pad_on = new Sprite(32, "/textures/pad_on.png");
 	
+	//Doors
+	public static Sprite door_closed = new Sprite(32, "/textures/door_closed.png");
+	public static Sprite door_open = new Sprite(32, "/textures/door_open.png");
+	
 	public Sprite(int s, int color) {
 		SIZE = s;
 		pixels = new int[SIZE * SIZE];

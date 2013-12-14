@@ -6,6 +6,7 @@ import com.person124.yogo.graphics.Render;
 import com.person124.yogo.graphics.Sprite;
 import com.person124.yogo.input.Keyboard;
 import com.person124.yogo.level.Level;
+import com.person124.yogo.sound.Audio;
 
 public class MobPlayer extends Mob {
 	
@@ -33,6 +34,7 @@ public class MobPlayer extends Mob {
 		move(xa, ya);
 		
 		if (key.jump && !isJumping && hasTouchedGround) {
+			Audio.playSound("player.jump");
 			isJumping = true;
 			hasTouchedGround = false;
 			jumpTime = 0;
@@ -43,6 +45,7 @@ public class MobPlayer extends Mob {
 			jumpTime++;
 			move(0, -1);
 		}
+		if (collision(0, 1) && !hasTouchedGround) Audio.playSound("player.land");
 		if (collision(0, 1)) hasTouchedGround = true;
 		else hasTouchedGround = false;
 		
@@ -50,12 +53,14 @@ public class MobPlayer extends Mob {
 			int check = 33;
 			if (dir == 0) check *= -1;
 			if (!collision(check, 0)) {
+				Audio.playSound("player.putdown");
 				carrying = false;
 				key.keys[KeyEvent.VK_E] = false;
 				MobCrate crate = new MobCrate(x + check, y);
 				crate.init(level);
 			}
 		}
+		//System.out.println((x/32) + (y/32)* level.WIDTH);
 	}
 	
 	public void render(Render render) {

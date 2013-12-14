@@ -37,6 +37,7 @@ public class Launcher extends JFrame {
 	}
 	
 	private Launcher() {
+		Config.loadData();
 		try {
 			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 		} catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException e) {
@@ -67,6 +68,7 @@ public class Launcher extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if (!e.getActionCommand().isEmpty()) {
+					defaultScreenSize = Integer.parseInt(sizeIn.getText());
 					sizeOut.setText(getSize(sizeIn.getText()));
 				}
 			}
@@ -85,6 +87,7 @@ public class Launcher extends JFrame {
 		start.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
+				Config.set("screenSize", String.valueOf(defaultScreenSize));
 				String[] args = new String[] { sizeIn.getText() };
 				Game.start(args);
 				closeWindow();
@@ -138,8 +141,11 @@ public class Launcher extends JFrame {
 	}
 	
 	public static void main(String[] args) {
-		if (args[0].equalsIgnoreCase("skip")) {
-			Game.start(new String[] { "3" });
+		Config.createConfig();
+		if (args.length != 0) {
+			if (args[0].equalsIgnoreCase("skip")) {
+				Game.start(new String[] { String.valueOf(defaultScreenSize) });
+			}
 		} else {
 			SwingUtilities.invokeLater(new Runnable() {
 				public void run() {

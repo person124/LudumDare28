@@ -18,18 +18,6 @@ public class Level {
 	public final int WIDTH, HEIGHT;
 	public final TileCoordinate PLAYER_SPAWN;
 	
-	public Level(int size, TileCoordinate coord) {
-		WIDTH = size;
-		HEIGHT = size;
-		PLAYER_SPAWN = coord;
-		tiles = new Tile[WIDTH * HEIGHT];
-		for (int i = 0; i < tiles.length; i++) {
-			if (i % 2 == 0) tiles[i] = Tile.stoneWall;
-			else tiles[i] = Tile.nullTile;
-		}
-		tiles[tiles.length / 2] = Tile.nullTile;
-	}
-	
 	public Level(String path, TileCoordinate coord) {
 		int w = 0, h = 0;
 		int[] pixels = null;

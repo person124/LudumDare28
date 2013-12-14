@@ -22,7 +22,7 @@ public class Game extends Canvas implements Runnable {
 	public static final int WIDTH = 256, HEIGHT = WIDTH / 12 * 9;
 	private int scale;
 	private final Dimension SIZE;
-	public static final String NAME = "IDK";
+	public static final String NAME = "Chambers";
 	private boolean running = false;
 	private JFrame frame;
 	private Thread thread;

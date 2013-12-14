@@ -5,6 +5,7 @@ import java.awt.event.KeyEvent;
 import com.person124.yogo.Game;
 import com.person124.yogo.entity.Entity;
 import com.person124.yogo.graphics.Sprite;
+import com.person124.yogo.sound.Audio;
 
 public class MobCrate extends Mob {
 	
@@ -16,6 +17,7 @@ public class MobCrate extends Mob {
 		gravCheck();
 		if (!Game.thePlayer.carrying && Entity.getDistance(this, Game.thePlayer) <= 32) {
 			if (Game.thePlayer.key.pickup) {
+				Audio.playSound("player.pickup");
 				Game.thePlayer.key.keys[KeyEvent.VK_E] = false;
 				Game.thePlayer.carrying = true;
 				remove();
