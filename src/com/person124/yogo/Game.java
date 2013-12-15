@@ -29,11 +29,12 @@ public class Game extends Canvas implements Runnable {
 	private JFrame frame;
 	private Thread thread;
 	private static Random rand = new Random();
+	public static boolean renderLava = true;
 	
 	private BufferedImage image = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_RGB);
 	private int[] pixels = ((DataBufferInt) image.getRaster().getDataBuffer()).getData();
 	
-	public static final int MAX_LEVEL = 4;
+	public static final int MAX_LEVEL = 6;
 	@SuppressWarnings("unused")
 	private static int wins = 0;
 	private static boolean[] levelPlayed = new boolean[MAX_LEVEL];
@@ -67,27 +68,35 @@ public class Game extends Canvas implements Runnable {
 		for (int i = 0; i < MAX_LEVEL; i++) {
 			temp = rand.nextInt(MAX_LEVEL);
 			if (!levelPlayed[temp]) {
-				switch (temp + 1) {
-					case 1:
+				switch (temp) {
+					case 0:
 						loadLevel(Level.level1);
-						levelPlayed[temp - 1] = true;
+						levelPlayed[0] = true;
+						return;
+					case 1:
+						loadLevel(Level.level2);
+						levelPlayed[1] = true;
 						return;
 					case 2:
-						loadLevel(Level.level2);
-						levelPlayed[temp - 1] = true;
+						loadLevel(Level.level3);
+						levelPlayed[2] = true;
 						return;
 					case 3:
-						loadLevel(Level.level3);
-						levelPlayed[temp - 1] = true;
+						loadLevel(Level.level4);
+						levelPlayed[3] = true;
 						return;
 					case 4:
-						loadLevel(Level.level4);
-						levelPlayed[temp - 2] = true;
+						loadLevel(Level.level5);
+						levelPlayed[4] = true;
+						return;
+					case 5:
+						loadLevel(Level.level6);
+						levelPlayed[5] = true;
 						return;
 				}
 			}
 		}
-		//Here goes the "onCompleted suff"
+		//Here will goes the "onCompleted suff"
 	}
 	
 	public static void addWin() {

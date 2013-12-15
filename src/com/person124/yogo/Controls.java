@@ -73,6 +73,10 @@ public class Controls extends JFrame {
 					if (e.getKeyCode() == KeyEvent.VK_Y) Config.set("effect", String.valueOf(true));
 					if (e.getKeyCode() == KeyEvent.VK_N) Config.set("effect", String.valueOf(false));
 				}
+				if (sel == 7) {
+					if (e.getKeyCode() == KeyEvent.VK_Y) Config.set("renderLava", String.valueOf(true));
+					if (e.getKeyCode() == KeyEvent.VK_N) Config.set("renderLava", String.valueOf(false));
+				}
 				refresh();
 			}
 		});
@@ -110,13 +114,15 @@ public class Controls extends JFrame {
 		model.add(0, "Move Left: " + KeyEvent.getKeyText(Config.getInt("left")));
 		model.add(1, "Move Right: " + KeyEvent.getKeyText(Config.getInt("right")));
 		model.add(2, "Jump: " + KeyEvent.getKeyText(Config.getInt("jump")));
-		model.add(3, "Pickup Items: " + KeyEvent.getKeyText(Config.getInt("pickup")));
+		model.add(3, "Pickup/Putdown Boxes: " + KeyEvent.getKeyText(Config.getInt("pickup")));
 		model.add(4, "Show FPS: " + KeyEvent.getKeyText(Config.getInt("debug")));
-		String music = "Y", effect = "Y";
+		String music = "Y", effect = "Y", lava = "Y";
 		if (!Config.getBoolean("music")) music = "N";
 		if (!Config.getBoolean("effect")) effect = "N";
+		if (!Config.getBoolean("renderLava")) lava = "N";
 		model.add(5, "Play Music (Y/N): " + music);
 		model.add(6, "Player Sound Effects (Y/N): " + effect);
+		model.add(7, "Do Lava Animations (Y/N): " + lava); 
 	}
 	
 	public static void openWindow() {

@@ -12,15 +12,17 @@ public class TileLava extends Tile {
 	
 	private int color = 0xff5800;
 	private Random rand = new Random();
-
+	
 	public TileLava(int id) {
 		super(new Sprite(32, 0xff0000), false, id);
 	}
 	
 	public void update(int loc) {
-		sprite = new Sprite(32, color);
-		if (rand.nextBoolean()) color += 0x000100;
-		if (color >= 0xffba00) color = 0xff5800;
+		if (Game.renderLava) {
+			sprite = new Sprite(32, color);
+			if (rand.nextBoolean()) color += 0x000100;
+			if (color >= 0xffba00) color = 0xff5800;
+		}
 		for (Entity e : Game.level.getEntities()) {
 			if (e instanceof Mob) {
 				Mob m = (Mob) e;

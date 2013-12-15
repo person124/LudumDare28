@@ -34,6 +34,7 @@ public class Config {
 				prop.setProperty("effect", String.valueOf(Audio.playEffects));
 				
 				prop.setProperty("screenSize", String.valueOf(Launcher.defaultScreenSize));
+				prop.setProperty("renderLava", String.valueOf(Game.renderLava));
 				
 				prop.store(out, "");
 			} catch (Exception e) {
@@ -54,6 +55,7 @@ public class Config {
 			Audio.playEffects = getBoolean("effect");
 			
 			Launcher.defaultScreenSize = getInt("screenSize");
+			Game.renderLava = getBoolean("renderLava");
 		} else {
 			createConfig();
 		}
@@ -85,6 +87,7 @@ public class Config {
 		prop.setProperty("effect", String.valueOf(true));
 		
 		prop.setProperty("screenSize", String.valueOf(3));
+		prop.setProperty("renderLava", String.valueOf(true));
 		
 		prop.save(out, "");
 	}

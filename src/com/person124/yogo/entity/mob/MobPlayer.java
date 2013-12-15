@@ -21,8 +21,14 @@ public class MobPlayer extends Mob {
 	}
 	
 	public void update() {
-		if (dir == 0) sprite = Sprite.player_stand_left;
-		if (dir == 1) sprite = Sprite.player_stand_right;
+		if (dir == 0) {
+			if (!carrying) sprite = Sprite.player_stand_left;
+			else sprite = Sprite.player_hold_left;
+		}
+		if (dir == 1) {
+			if (!carrying) sprite = Sprite.player_stand_right;
+			else sprite = Sprite.player_hold_right;
+		}
 		
 		if (!isJumping) gravCheck();
 		
@@ -60,7 +66,6 @@ public class MobPlayer extends Mob {
 				crate.init(level);
 			}
 		}
-		//System.out.println((x/32) + (y/32)* level.WIDTH);
 	}
 	
 	public void render(Render render) {

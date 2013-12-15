@@ -13,8 +13,10 @@ public class Sprite {
 	public static Sprite nullSprite = new Sprite(32, 0x000000);
 	
 	//Player stuff
-	public static Sprite player_stand_right = new Sprite(32, "/textures/player_right_stand.png");
-	public static Sprite player_stand_left = new Sprite(32, "/textures/player_left_stand.png");
+	public static Sprite player_stand_right = new Sprite(32, "/textures/player_right.png");
+	public static Sprite player_stand_left = player_stand_right.reverseSprite();
+	public static Sprite player_hold_right = new Sprite(32, "/textures/player_hold_right.png");
+	public static Sprite player_hold_left = player_hold_right.reverseSprite();
 	
 	//Entities
 	public static Sprite window = new Sprite(64, "/textures/window.png");
@@ -38,7 +40,7 @@ public class Sprite {
 	//Doors
 	public static Sprite door_closed = new Sprite(32, "/textures/door_closed.png");
 	public static Sprite door_open = new Sprite(32, "/textures/door_open.png");
-		
+	
 	public Sprite(int s, int color) {
 		SIZE = s;
 		pixels = new int[SIZE * SIZE];
@@ -56,6 +58,26 @@ public class Sprite {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	public Sprite(int s, int[] p) {
+		SIZE = s;
+		pixels = new int[SIZE * SIZE];
+		for (int i = 0; i < pixels.length; i++) {
+			pixels[i] = p[i];
+		}
+	}
+	
+	public Sprite reverseSprite() {
+		int[] temp = new int[pixels.length];
+		int size = (int) Math.sqrt(pixels.length);
+		int sizeMask = size - 1;
+		for (int y = 0; y < size; y++) {
+			for (int x = 0; x < size; x++) {
+				temp[x + y * size] = pixels[(sizeMask - x) + y * size];
+			}
+		}
+		return new Sprite(size, temp);
 	}
 	
 }

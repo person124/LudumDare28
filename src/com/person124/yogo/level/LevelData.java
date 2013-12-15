@@ -27,6 +27,8 @@ public class LevelData {
 	public static LevelData level2 = new LevelData("/levels/data/level2");
 	public static LevelData level3 = new LevelData("/levels/data/level3");
 	public static LevelData level4 = new LevelData("/levels/data/level4");
+	public static LevelData level5 = new LevelData("/levels/data/level5");
+	public static LevelData level6 = new LevelData("/levels/data/level6");
 	
 	public LevelData(String path) {
 		int size = 0;
