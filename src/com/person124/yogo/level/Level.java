@@ -15,10 +15,14 @@ public class Level {
 	
 	public Tile[] tiles;
 	private List<Entity> entities = new ArrayList<Entity>();
+	public final LevelData DATA;
 	public final int WIDTH, HEIGHT;
 	public final TileCoordinate PLAYER_SPAWN;
 	
-	public Level(String path, TileCoordinate coord) {
+	public static Level level1 = new Level("/levels/level1.png", LevelData.level1);
+	public static Level level2 = new Level("/levels/level2.png", LevelData.level2);
+	
+	public Level(String path, LevelData data) {
 		int w = 0, h = 0;
 		int[] pixels = null;
 		try {
@@ -32,7 +36,8 @@ public class Level {
 		}
 		WIDTH = w;
 		HEIGHT = h;
-		PLAYER_SPAWN = coord;
+		DATA = data;
+		PLAYER_SPAWN = DATA.SPAWN;
 		tiles = new Tile[pixels.length];
 		for (int i = 0; i < pixels.length; i++) {
 			tiles[i] = Tile.getTile(pixels[i]);

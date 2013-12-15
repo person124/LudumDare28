@@ -12,6 +12,7 @@ public class Tile {
 	public static Tile nullTile = new Tile(Sprite.nullSprite, false, -1);
 	
 	public static Tile stoneWall = new Tile(Sprite.stone_wall, true, 0xff626262);
+	public static Tile stoneWallStand = new Tile(Sprite.stone_wall_stand, false, 0xff808080);
 	
 	public static Tile bg_stoneWall = new Tile(Sprite.bg_stone_wall, false, 0xff9d9d9d);
 	
@@ -23,6 +24,9 @@ public class Tile {
 	public static Tile door_closed = new TileDoorClosed(0xffababab);
 	public static Tile door_open = new TileDoorOpen();
 	
+	public static Tile elevator_active = new TileElevator(0xff545454);
+	public static Tile elevator_deactive = new Tile(Sprite.elevator, false, 0xff454545);
+	
 	public Tile(Sprite sprite, boolean solid, int id) {
 		this.sprite = sprite;
 		SOLID = solid;
@@ -31,6 +35,7 @@ public class Tile {
 	
 	public static Tile getTile(int col) {
 		if (col == stoneWall.ID) return stoneWall;
+		if (col == stoneWallStand.ID) return stoneWallStand;
 		
 		if (col == bg_stoneWall.ID) return bg_stoneWall;
 		
@@ -39,6 +44,9 @@ public class Tile {
 		if (col == lava.ID) return new TileLava(0xffff00);
 		
 		if (col == door_closed.ID) return door_closed;
+		
+		if (col == elevator_active.ID) return new TileElevator(0xff545454);
+		if (col == elevator_deactive.ID) return elevator_deactive;
 		
 		return nullTile;
 	}

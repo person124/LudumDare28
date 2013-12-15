@@ -6,15 +6,16 @@ import java.awt.Graphics;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferInt;
+import java.util.Random;
 
 import javax.swing.JFrame;
 
-import com.person124.yogo.entity.mob.MobCrate;
+import com.person124.yogo.entity.Entity;
 import com.person124.yogo.entity.mob.MobPlayer;
 import com.person124.yogo.graphics.Render;
 import com.person124.yogo.input.Keyboard;
 import com.person124.yogo.level.Level;
-import com.person124.yogo.level.TileCoordinate;
+import com.person124.yogo.level.tile.TileDoorClosed;
 
 public class Game extends Canvas implements Runnable {
 	private static final long serialVersionUID = 1L;
@@ -26,12 +27,16 @@ public class Game extends Canvas implements Runnable {
 	private boolean running = false;
 	private JFrame frame;
 	private Thread thread;
+	private static Random rand = new Random();
 	
 	private BufferedImage image = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_RGB);
 	private int[] pixels = ((DataBufferInt) image.getRaster().getDataBuffer()).getData();
 	
+	public static final int MAX_LEVEL = 2;
+	private static boolean[] levelPlayed = new boolean[MAX_LEVEL];
+	
 	private Render render;
-	private Keyboard key;
+	private static Keyboard key;
 	public static Level level;
 	public static MobPlayer thePlayer;
 	
@@ -42,16 +47,51 @@ public class Game extends Canvas implements Runnable {
 		
 		render = new Render(WIDTH, HEIGHT);
 		key = new Keyboard();
-		level = new Level("/levels/test.png", new TileCoordinate(2, 23));
-		
-		thePlayer = new MobPlayer(key);
-		thePlayer.init(level);
-		
-		MobCrate crate = new MobCrate(32, 23 * 32);
-		crate.init(level);
+		nextLevel();
 		
 		addKeyListener(key);
 		addFocusListener(key);
+	}
+	
+	public static void nextLevel() {
+		if (!levelPlayed[0]) {
+			loadLevel(Level.level1);
+			levelPlayed[0] = false;
+			return;
+		}
+		int temp;
+		for (int i = 0; i < MAX_LEVEL; i++) {
+			temp = rand.nextInt(MAX_LEVEL);
+			if (!levelPlayed[temp]) {
+				switch (temp) {
+					case 0:
+						loadLevel(Level.level1);
+						levelPlayed[0] = true;
+						break;
+					case 1:
+						loadLevel(Level.level2);
+						levelPlayed[1] = true;
+						break;
+				}
+				break;
+			}
+		}
+	}
+	
+	public static void loadLevel(Level l) {
+		level = l;
+		int temp = l.DATA.doorPixels.length / 2;
+		for (int i = 0; i < temp; i++) {
+			TileDoorClosed door = new TileDoorClosed(0xffababab);
+			door.setButtonLookNumber(l.DATA.doorPixels[(i * 2) + 1] - 0xff000000);
+			level.tiles[l.DATA.doorPixels[(i * 2)] - 0xff000000] = door;
+		}
+		for (Entity e : l.DATA.entities) {
+			e.init(level);
+		}
+		thePlayer = new MobPlayer(key);
+		thePlayer.init(level);
+		thePlayer.carrying = false;
 	}
 	
 	public void run() {
@@ -61,11 +101,11 @@ public class Game extends Canvas implements Runnable {
 		long timer = System.currentTimeMillis();
 		int fps = 0, ups = 0;
 		requestFocus();
-		while(running) {
+		while (running) {
 			long now = System.nanoTime();
 			delta += (now - lastTime) / NS;
 			lastTime = now;
-			while(delta >= 0) {
+			while (delta >= 0) {
 				update();
 				ups++;
 				delta--;
@@ -74,7 +114,7 @@ public class Game extends Canvas implements Runnable {
 			fps++;
 			
 			if (System.currentTimeMillis() - timer > 1000) {
-				if(key.debug) frame.setTitle(NAME + " | fps: " + fps + ", ups: " + ups);
+				if (key.debug) frame.setTitle(NAME + " | fps: " + fps + ", ups: " + ups);
 				else frame.setTitle(NAME);
 				timer += 1000;
 				fps = 0;
@@ -129,6 +169,7 @@ public class Game extends Canvas implements Runnable {
 	}
 	
 	public static void start(String[] args) {
+		Config.loadData();
 		Game g = new Game(Integer.parseInt(args[0]));
 		
 		g.frame.setPreferredSize(g.SIZE);
@@ -142,5 +183,5 @@ public class Game extends Canvas implements Runnable {
 		
 		g.start();
 	}
-
+	
 }

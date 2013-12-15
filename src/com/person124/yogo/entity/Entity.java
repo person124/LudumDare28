@@ -1,5 +1,6 @@
 package com.person124.yogo.entity;
 
+import com.person124.yogo.entity.mob.MobCrate;
 import com.person124.yogo.graphics.Render;
 import com.person124.yogo.graphics.Sprite;
 import com.person124.yogo.level.Level;
@@ -15,6 +16,16 @@ public class Entity {
 		this.sprite = sprite;
 		this.x = x;
 		this.y = y;
+	}
+	
+	public static Entity parseEntity(int id) {
+		Entity e = null;
+		
+		if (id == 0) e = new MobCrate(0, 0);
+		if (id == 1) e = new EntityWindow(0, 0);
+		if (id == 2) e = new EntityDoor(0, 0);
+		
+		return e;
 	}
 	
 	public void update() {

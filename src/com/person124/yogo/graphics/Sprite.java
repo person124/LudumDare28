@@ -16,11 +16,17 @@ public class Sprite {
 	public static Sprite player_stand_right = new Sprite(32, "/textures/player_right_stand.png");
 	public static Sprite player_stand_left = new Sprite(32, "/textures/player_left_stand.png");
 	
+	//Entities
+	public static Sprite window = new Sprite(64, "/textures/window.png");
+	public static Sprite door = new Sprite(32, "/textures/door.png");
+	
 	//Mobs
 	public static Sprite crate = new Sprite(32, "/textures/crate.png");
 	
-	//Normal Blocks
+	//Normal Tiles
 	public static Sprite stone_wall = new Sprite(32, "/textures/stone_wall.png");
+	public static Sprite stone_wall_stand = new Sprite(32, "/textures/stone_wall_stand.png");
+	public static Sprite elevator = new Sprite(32, "/textures/elevator.png");
 	
 	//Backgrounds
 	public static Sprite bg_stone_wall = new Sprite(32, "/textures/bg_stone_wall.png");
@@ -32,7 +38,7 @@ public class Sprite {
 	//Doors
 	public static Sprite door_closed = new Sprite(32, "/textures/door_closed.png");
 	public static Sprite door_open = new Sprite(32, "/textures/door_open.png");
-	
+		
 	public Sprite(int s, int color) {
 		SIZE = s;
 		pixels = new int[SIZE * SIZE];

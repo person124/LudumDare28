@@ -6,6 +6,7 @@ import com.person124.yogo.Game;
 import com.person124.yogo.entity.Entity;
 import com.person124.yogo.entity.mob.Mob;
 import com.person124.yogo.graphics.Sprite;
+import com.person124.yogo.sound.Audio;
 
 public class TileLava extends Tile {
 	
@@ -26,7 +27,10 @@ public class TileLava extends Tile {
 				int xPos = (m.x + 16) / 32;
 				int yPos = m.y / 32;
 				int mLoc = xPos + yPos * Game.level.WIDTH;
-				if (mLoc == loc) m.remove();
+				if (mLoc == loc) {
+					m.remove();
+					Audio.playSound("lava.burn");
+				}
 			}
 		}
 	}

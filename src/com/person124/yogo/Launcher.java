@@ -33,7 +33,7 @@ public class Launcher extends JFrame {
 		text.append("Welcome to: " + NAME + "!\n");
 		text.append("Type a number inside the \"Scale:\" and hit enter to change\n");
 		text.append("the size when you start (default: " + defaultScreenSize + ")\n\n");
-		text.append("If the game doesn't start,\ndelete data.properties and try again.");
+		text.append("If the game doesn't start,\ndelete " + NAME.toLowerCase().replace(" ", "_") + ".properties and try again.");
 	}
 	
 	private Launcher() {
@@ -107,12 +107,12 @@ public class Launcher extends JFrame {
 		panel.add(info);
 		
 		controls = new JButton("Options");
-		controls.setEnabled(false);
+		controls.setEnabled(true);
 		controls.setBounds(100, 385, 200, 50);
 		controls.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				
+				Controls.openWindow();
 			}
 		});
 		panel.add(controls);
@@ -144,6 +144,8 @@ public class Launcher extends JFrame {
 		Config.createConfig();
 		if (args.length != 0) {
 			if (args[0].equalsIgnoreCase("skip")) {
+				Config.createConfig();
+				Config.loadData();
 				Game.start(new String[] { String.valueOf(defaultScreenSize) });
 			}
 		} else {
@@ -154,6 +156,13 @@ public class Launcher extends JFrame {
 				}
 			});
 		}
+	}
+
+	public static void enableButtons(boolean b) {
+		start.setEnabled(b);
+		info.setEnabled(b);
+		controls.setEnabled(b);
+		exit.setEnabled(b);
 	}
 	
 }
