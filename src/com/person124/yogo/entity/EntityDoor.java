@@ -11,11 +11,11 @@ public class EntityDoor extends Entity {
 	}
 	
 	public void update() {
-		for (Entity e : level.getEntities()) {
-			if (e instanceof MobPlayer) {
-				MobPlayer p = (MobPlayer) e;
+		for (int i = 0; i < Game.level.getEntities().size(); i++) {
+			if (Game.level.getEntities().get(i) instanceof MobPlayer) {
+				MobPlayer p = (MobPlayer) Game.level.getEntities().get(i);
 				if (Entity.getDistance(this, p) < sprite.SIZE / 2) {
-					Game.nextLevel();
+					Game.addWin();
 				}
 			}
 		}

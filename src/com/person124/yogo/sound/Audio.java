@@ -9,6 +9,7 @@ public class Audio {
 	public static boolean playEffects = true, playMusic = true;
 	
 	//List songs here:
+	public static Audio trapped = new Audio("/music/trapped.wav");
 	
 	public Audio(String path) {
 		Audio.audio = Applet.newAudioClip(Audio.class.getResource(path));

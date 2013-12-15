@@ -16,6 +16,7 @@ import com.person124.yogo.graphics.Render;
 import com.person124.yogo.input.Keyboard;
 import com.person124.yogo.level.Level;
 import com.person124.yogo.level.tile.TileDoorClosed;
+import com.person124.yogo.sound.Audio;
 
 public class Game extends Canvas implements Runnable {
 	private static final long serialVersionUID = 1L;
@@ -32,7 +33,9 @@ public class Game extends Canvas implements Runnable {
 	private BufferedImage image = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_RGB);
 	private int[] pixels = ((DataBufferInt) image.getRaster().getDataBuffer()).getData();
 	
-	public static final int MAX_LEVEL = 2;
+	public static final int MAX_LEVEL = 4;
+	@SuppressWarnings("unused")
+	private static int wins = 0;
 	private static boolean[] levelPlayed = new boolean[MAX_LEVEL];
 	
 	private Render render;
@@ -56,26 +59,44 @@ public class Game extends Canvas implements Runnable {
 	public static void nextLevel() {
 		if (!levelPlayed[0]) {
 			loadLevel(Level.level1);
-			levelPlayed[0] = false;
+			levelPlayed[0] = true;
+			Audio.trapped.play(true);
 			return;
 		}
 		int temp;
 		for (int i = 0; i < MAX_LEVEL; i++) {
 			temp = rand.nextInt(MAX_LEVEL);
 			if (!levelPlayed[temp]) {
-				switch (temp) {
-					case 0:
-						loadLevel(Level.level1);
-						levelPlayed[0] = true;
-						break;
+				switch (temp + 1) {
 					case 1:
+						loadLevel(Level.level1);
+						levelPlayed[temp - 1] = true;
+						return;
+					case 2:
 						loadLevel(Level.level2);
-						levelPlayed[1] = true;
-						break;
+						levelPlayed[temp - 1] = true;
+						return;
+					case 3:
+						loadLevel(Level.level3);
+						levelPlayed[temp - 1] = true;
+						return;
+					case 4:
+						loadLevel(Level.level4);
+						levelPlayed[temp - 2] = true;
+						return;
 				}
-				break;
 			}
 		}
+		//Here goes the "onCompleted suff"
+	}
+	
+	public static void addWin() {
+		wins++;
+		nextLevel();
+	}
+	
+	public void addLose() {
+		nextLevel();
 	}
 	
 	public static void loadLevel(Level l) {
@@ -126,6 +147,7 @@ public class Game extends Canvas implements Runnable {
 	public void update() {
 		key.update();
 		level.update();
+		if (!level.getEntities().contains(thePlayer)) addLose();
 	}
 	
 	public void render() {
