@@ -13,6 +13,7 @@ import javax.swing.JFrame;
 import com.person124.yogo.entity.Entity;
 import com.person124.yogo.entity.mob.MobPlayer;
 import com.person124.yogo.graphics.Render;
+import com.person124.yogo.graphics.Screen;
 import com.person124.yogo.input.Keyboard;
 import com.person124.yogo.level.Level;
 import com.person124.yogo.level.tile.TileDoorClosed;
@@ -34,12 +35,14 @@ public class Game extends Canvas implements Runnable {
 	private BufferedImage image = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_RGB);
 	private int[] pixels = ((DataBufferInt) image.getRaster().getDataBuffer()).getData();
 	
-	public static final int MAX_LEVEL = 6;
-	@SuppressWarnings("unused")
+	public static final int MAX_LEVEL = 8;
 	private static int wins = 0;
 	private static boolean[] levelPlayed = new boolean[MAX_LEVEL];
+	private static boolean done = false;
+	private static Screen screen;
+	private int time = 0, maxTime = 60 * 10;
 	
-	private Render render;
+	private static Render render;
 	private static Keyboard key;
 	public static Level level;
 	public static MobPlayer thePlayer;
@@ -93,10 +96,25 @@ public class Game extends Canvas implements Runnable {
 						loadLevel(Level.level6);
 						levelPlayed[5] = true;
 						return;
+					case 6:
+						loadLevel(Level.level7);
+						levelPlayed[6] = true;
+						return;
+					case 7:
+						loadLevel(Level.level8);
+						levelPlayed[7] = true;
+						return;
 				}
 			}
 		}
-		//Here will goes the "onCompleted suff"
+		onCompleted();
+	}
+	
+	private static void onCompleted() {
+		if (wins > 8) wins = 8;
+		loadLevel(Level.levelFinal);
+		screen = new Screen("/textures/endings/" + String.valueOf(wins) + "of8.png");
+		done = true;
 	}
 	
 	public static void addWin() {
@@ -157,6 +175,10 @@ public class Game extends Canvas implements Runnable {
 		key.update();
 		level.update();
 		if (!level.getEntities().contains(thePlayer)) addLose();
+		if (done) {
+			time++;
+			if (time >= maxTime) System.exit(0);
+		}
 	}
 	
 	public void render() {
@@ -172,6 +194,7 @@ public class Game extends Canvas implements Runnable {
 		render.clear();
 		Graphics g = bs.getDrawGraphics();
 		level.render(render, xOff, yOff);
+		if (done) render.renderScreen(screen);
 		
 		for (int i = 0; i < pixels.length; i++) {
 			pixels[i] = render.pixels[i];

@@ -96,12 +96,13 @@ public class Launcher extends JFrame {
 		panel.add(start);
 		
 		info = new JButton("Infomation");
-		info.setEnabled(false);
+		info.setEnabled(true);
 		info.setBounds(100, 325, 200, 50);
 		info.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				
+				enableButtons(false);
+				Info.openInfoScreen();
 			}
 		});
 		panel.add(info);
@@ -112,6 +113,7 @@ public class Launcher extends JFrame {
 		controls.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				enableButtons(false);
 				Controls.openWindow();
 			}
 		});
@@ -157,7 +159,7 @@ public class Launcher extends JFrame {
 			});
 		}
 	}
-
+	
 	public static void enableButtons(boolean b) {
 		start.setEnabled(b);
 		info.setEnabled(b);

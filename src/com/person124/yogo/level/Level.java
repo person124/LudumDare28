@@ -25,6 +25,9 @@ public class Level {
 	public static Level level4 = new Level("/levels/level4.png", LevelData.level4);
 	public static Level level5 = new Level("/levels/level5.png", LevelData.level5);
 	public static Level level6 = new Level("/levels/level6.png", LevelData.level6);
+	public static Level level7 = new Level("/levels/level7.png", LevelData.level7);
+	public static Level level8 = new Level("/levels/level8.png", LevelData.level8);
+	public static Level levelFinal = new Level("/levels/final.png", LevelData.levelFinal);
 	
 	public Level(String path, LevelData data) {
 		int w = 0, h = 0;

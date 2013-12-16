@@ -13,7 +13,7 @@ public class Render {
 	
 	public void clear() {
 		for (int i = 0; i < pixels.length; i++) {
-			pixels[i] = 0xff00ff;
+			pixels[i] = 0;
 		}
 	}
 	
@@ -35,6 +35,14 @@ public class Render {
 				
 				int col = sprite.pixels[x + y * sprite.SIZE];
 				if (col != 0xffff00ff) pixels[xa + ya * Game.WIDTH] = col;
+			}
+		}
+	}
+	
+	public void renderScreen(Screen screen) {
+		for (int y = 0; y < Game.HEIGHT; y++) {
+			for (int x = 0; x < Game.WIDTH; x++) {
+				pixels[x + y * Game.WIDTH] = screen.pixels[x + y * Game.WIDTH];
 			}
 		}
 	}

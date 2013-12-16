@@ -29,6 +29,9 @@ public class LevelData {
 	public static LevelData level4 = new LevelData("/levels/data/level4");
 	public static LevelData level5 = new LevelData("/levels/data/level5");
 	public static LevelData level6 = new LevelData("/levels/data/level6");
+	public static LevelData level7 = new LevelData("/levels/data/level7");
+	public static LevelData level8 = new LevelData("/levels/data/level8");
+	public static LevelData levelFinal = new LevelData("/levels/data/final");
 	
 	public LevelData(String path) {
 		int size = 0;
@@ -60,6 +63,7 @@ public class LevelData {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		if (doorPixels[0] == 0xff000000) doorPixels = new int[0];
 	}
 	
 }
